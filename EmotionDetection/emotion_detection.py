@@ -17,10 +17,10 @@ def emotion_detector(text_to_analyze):
     response = requests.post(url, json = myobj, headers=header, timeout=(5, 10))
 
     if response.status_code == 200:
-        # Parsing the JSON response and convert it into object
+        # Parse the JSON response and convert it into object
         data = json.loads(response.text)
 
-        # Extracting emotion prodictions from the response as a dict
+        # Extract emotion prodictions from the response as a dict
         emotion = data["emotionPredictions"][0]["emotion"]
 
         # Find the most dominant emotion
