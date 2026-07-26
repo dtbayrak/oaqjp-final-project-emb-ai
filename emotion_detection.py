@@ -1,3 +1,4 @@
+import json
 import requests
 
 # Define a function named emotion_detector that takes a string input
@@ -16,9 +17,21 @@ def emotion_detector(text_to_analyze):
     response = requests.post(url, json = myobj, headers=header, timeout=(5, 10))
 
     if response.status_code == 200:
-        return response.text
+        # Parsing the JSON response and convert it into object
+        data = json.loads(response.text)
+
+        # Extracting emotion prodictions from the response as a dict
+        emotion = data["emotionPredictions"][0]["emotion"]
+
+        # Find the most dominant emotion
+        dominant = max(emotion, key=emotion.get)
+
+        # Add dominant_emotion to dict
+        emotion["dominant_emotion"] = dominant
+
+        return emotion
     else:
         return f'An error occurred with the HTTP status code: {response.status_code}'
 
 if __name__ == "__main__":
-    print(emotion_detector("I am happy"))
+    print(emotion_detector("I am so happy I am doing this."))
