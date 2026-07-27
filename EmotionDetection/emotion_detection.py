@@ -1,9 +1,21 @@
 import json
 import requests
 
+EMPTY_EMOTION = {
+    'anger': None,
+    'disgust': None,
+    'fear': None,
+    'joy': None,
+    'sadness': None,
+    'dominant_emotion': None
+}
+
 # Define a function named emotion_detector that takes a string input
 def emotion_detector(text_to_analyze):
-
+    """
+    This function analyzes emotional content of the given text.
+    Returns: Emotion scores and dominant emotion.
+    """
     # URL of the emotion detection service
     url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
 
@@ -30,8 +42,9 @@ def emotion_detector(text_to_analyze):
         emotion["dominant_emotion"] = dominant
 
         return emotion
+    # 400 Bad Request or any other errors
     else:
-        return f'An error occurred with the HTTP status code: {response.status_code}'
+        return EMPTY_EMOTION
 
 if __name__ == "__main__":
     print(emotion_detector("I am so happy I am doing this."))
