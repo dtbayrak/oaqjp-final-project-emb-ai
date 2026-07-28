@@ -42,7 +42,10 @@ def emotion_detector(text_to_analyze):
         emotion["dominant_emotion"] = dominant
 
         return emotion
-    # 400 Bad Request or any other errors
+    # 400 Bad Request
+    elif response.status_code == 400:
+        return EMPTY_EMOTION
+    # Any other errors
     else:
         return EMPTY_EMOTION
 
